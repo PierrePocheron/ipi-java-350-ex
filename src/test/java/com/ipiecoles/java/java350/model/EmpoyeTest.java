@@ -86,25 +86,16 @@ public class EmpoyeTest {
         Assertions.assertThat(nbAnneeAnciennete).isLessThan(50);
     }
 
-
-    @Test
-    public void testCheckPrimeAnnuelle(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "0", LocalDate.now().minusYears(15), 1000d, 10, 1d);
-
-        // When
-        double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isPositive();
-        Assertions.assertThat(primeAnnuelle).isLessThan(100000);
-        Assertions.assertThat(primeAnnuelle).isGreaterThanOrEqualTo(100);
-    }
-
+    // Correction
     @Test
     public void testCheckPrimeAnnuelleDefaut(){
         // Given
-        Employe employe = new Employe("Popo", "prenom", "T00001", LocalDate.now().minusYears(0), 1000d, 1, 1d);
+        Integer performance = 1;
+        String matricule = "T12345";
+        Double tauxActivite = 1.0;
+        Long nbAnneeAnciennete = 0L;
+
+        Employe employe = new Employe("Popo", "prenom", matricule, LocalDate.now().minusYears(nbAnneeAnciennete), 1000d, performance, tauxActivite);
 
         // When
         double primeAnnuelle = employe.getPrimeAnnuelle();
@@ -113,75 +104,26 @@ public class EmpoyeTest {
         Assertions.assertThat(primeAnnuelle).isEqualTo(1000);
     }
 
-    @Test
-    public void testCheckPrimeAnnuelleManager(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "M00001", LocalDate.now().minusYears(0), 1000d, 1, 1d);
-
+    @ParameterizedTest
+    @CsvSource({
+            "1, 'T12345', 1.0, 0, 1000",
+            "1, 'M12345', 1.0, 0, 1700",
+            "5, 'T12345', 1.0, 0, 5300",
+            "1, 'T12345', 2.0, 0, 2000",
+            "1, 'T12345', 2.0, 5, 3000",
+            "4, 'M12345', 3.0, 7, 7200",
+    })
+    void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
+        //Given
+        Employe employe = new Employe("Popo", "prenom", matricule, LocalDate.now().minusYears(nbAnneeAnciennete), 1000d, performance, tauxActivite);
         // When
         double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isEqualTo(1700);
+        // Then
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
     }
-
-    @Test
-    public void testCheckPrimeAnnuellePerformance5(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "C00001", LocalDate.now().minusYears(0), 1000d, 5, 1d);
-
-        // When
-        double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isEqualTo(5300);
-    }
-
-    @Test
-    public void testCheckPrimeAnnuelleTempsPartiel2(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "C00001", LocalDate.now().minusYears(0), 1000d, 1, 2d);
-
-        // When
-        double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isEqualTo(2000);
-    }
-
-    @Test
-    public void testCheckPrimeAnnuelleAllParametres(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "M00001", LocalDate.now().minusYears(0), 10000d, 10, 10d);
-
-        // When
-        double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isEqualTo(17000);
-    }
-
-    @Test
-    public void testCheckPrimeAnnuelleManagerPerf10(){
-        // Given
-        Employe employe = new Employe("Popo", "prenom", "M00001", LocalDate.now().minusYears(15), 10000d, 10, 1d);
-
-        // When
-        double primeAnnuelle = employe.getPrimeAnnuelle();
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(primeAnnuelle).isEqualTo(3200);
-    }
-
-
-
-//    @ParameterizedTest
-//    @CsvSource({
-//            "'XXXXX', false",
-//            "'AA-123-BB', true"
-//    })
-//    void testCheckBadImmatriculation(String immat, Boolean result) {
-//        //Given, When, Then
-//        Assertions.assertThat(Employe.getPrimeAnnuelle()).isEqualTo(result);
-//    }
 }
