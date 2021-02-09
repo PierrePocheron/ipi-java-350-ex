@@ -113,6 +113,7 @@ public class EmpoyeTest {
             "1, 'T12345', 2.0, 5, 3000",
             "4, 'M12345', 3.0, 7, 7200",
 
+
     })
     void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
         //Given
