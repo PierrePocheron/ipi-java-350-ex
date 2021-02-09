@@ -112,6 +112,7 @@ public class EmpoyeTest {
             "1, 'T12345', 2.0, 0, 2000",
             "1, 'T12345', 2.0, 5, 3000",
             "4, 'M12345', 3.0, 7, 7200",
+
     })
     void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
         //Given
@@ -120,10 +121,22 @@ public class EmpoyeTest {
         double primeAnnuelle = employe.getPrimeAnnuelle();
         // Then
         Assertions.assertThat(primeAnnuelle).isEqualTo(result);
-        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
-        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
-        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
-        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
-        Assertions.assertThat(primeAnnuelle).isEqualTo(result);
+    }
+
+    // Correction
+    @Test
+    public void testCheckPrimeAnnuellematriculeNull(){
+        // Given
+        Integer performance = 1;
+        Double tauxActivite = 1.0;
+        Long nbAnneeAnciennete = 0L;
+
+        Employe employe = new Employe("Popo", "prenom", null, LocalDate.now().minusYears(nbAnneeAnciennete), 1000d, performance, tauxActivite);
+
+        // When
+        double primeAnnuelle = employe.getPrimeAnnuelle();
+
+        // Then (org.assertj.core.api.Assertions)
+        Assertions.assertThat(primeAnnuelle).isEqualTo(1000);
     }
 }
