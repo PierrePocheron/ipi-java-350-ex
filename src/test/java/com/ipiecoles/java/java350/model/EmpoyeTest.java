@@ -112,10 +112,9 @@ public class EmpoyeTest {
             "1, 'T12345', 2.0, 0, 2000",
             "1, 'T12345', 2.0, 5, 3000",
             "4, 'M12345', 3.0, 7, 7200",
-
-
     })
-    void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
+
+    public void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
         //Given
         Employe employe = new Employe("Popo", "prenom", matricule, LocalDate.now().minusYears(nbAnneeAnciennete), 1000d, performance, tauxActivite);
         // When
