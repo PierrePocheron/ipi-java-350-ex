@@ -49,10 +49,10 @@ public class EmployeService {
         }​​​​​
         //... et incrémentation
         Integer numeroMatricule = Integer.parseInt(lastMatricule) + 1;
-        if(numeroMatricule >= 100000){​​​​​
+        if(numeroMatricule >= 100000){
             logger.error("Limite des 100000 matricules atteinte !");
             throw new EmployeException("Limite des 100000 matricules atteinte !");
-        }​​​​​
+        }
         //On complète le numéro avec des 0 à gauche
         String matricule = "00000" + numeroMatricule;
         matricule = typeEmploye + matricule.substring(matricule.length() - 5);
