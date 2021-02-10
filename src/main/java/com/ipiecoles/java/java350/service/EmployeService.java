@@ -36,17 +36,17 @@ public class EmployeService {
      * @throws EntityExistsException Si le matricule correspond à un employé existant
      * @return
      */
-    public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {​​​​​
-        logger.info("Embauche d'un employé avec les infos suivantes : nom : {​​​​​}​​​​​, prénom : {​​​​​}​​​​​, poste {​​​​​}​​​​​, niveau d'étude : {​​​​​}​​​​​, taux activité : {​​​​​}​​​​​",
+    public Employe embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
+        logger.info("Embauche d'un employé avec les infos suivantes : nom : {}, prénom : {}, poste {}, niveau d'étude : {}, taux activité : {}",
                 nom, prenom, poste, niveauEtude, tempsPartiel);
         //Récupération du type d'employé à partir du poste
         String typeEmploye = poste.name().substring(0,1);
         //Récupération du dernier matricule...
         String lastMatricule = employeRepository.findLastMatricule();
-        if(lastMatricule == null){​​​​​
+        if(lastMatricule == null) {
             logger.warn("Aucun matricule trouvé, matricule initial affecté");
             lastMatricule = Entreprise.MATRICULE_INITIAL;
-        }​​​​​
+        }
         //... et incrémentation
         Integer numeroMatricule = Integer.parseInt(lastMatricule) + 1;
         if(numeroMatricule >= 100000){
@@ -72,6 +72,8 @@ public class EmployeService {
         Employe employe = new Employe(nom, prenom, matricule, LocalDate.now(), salaire, Entreprise.PERFORMANCE_BASE, tempsPartiel);
         employe = employeRepository.save(employe);
         logger.info("Employé créé : {}", employe.toString());
+
+        return employe;
     }
 
 

@@ -48,10 +48,8 @@ public class Employe {
      * @return
      */
     public Integer getNombreAnneeAnciennete() {
-        if (dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
-        {
+        if(dateEmbauche == null || dateEmbauche.isAfter(LocalDate.now()))
             return null;
-        }
         return LocalDate.now().getYear() - dateEmbauche.getYear();
     }
 
@@ -63,29 +61,51 @@ public class Employe {
         return getNbRtt(LocalDate.now());
     }
 
-    /**
-     *
-     * @param d
-     * @return
+
+    /***
+     * Méthode permettant de calculer le nombre de jour dans l'année selon la formule
+     * ( au prorata du temps d'activité )
+     * formule :
+     * Nombre de jours dans l'année -
+     * Nombre de jours travaillés dans l'année en plein temp -
+     * Nombre de samedi et dimanche dans l'année -
+     * Nombre de jours fériés ne tombant pas le week-end -
+     * Nombre de congés payés
+     * @param dateReference date a laquelle on va calculer le nombre de RTT pour l'année
+     * @return le nombre de jour de RTT pour l'employé de la date de référence au
+     * prorata du temps d'activité
      */
-    public Integer getNbRtt(LocalDate d){
-        int i1 = d.isLeapYear() ? 365 : 366;int var = 104;
-        switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
-        case THURSDAY: if(d.isLeapYear()) var =  var + 1; break;
-        case FRIDAY:
-        if(d.isLeapYear()) var =  var + 2;
-        else var =  var + 1;
-case SATURDAY:var = var + 1;
-                    break;
+    public Integer getNbRtt(LocalDate dateReference) {
+        int nbJourAnnee = dateReference.isLeapYear() ? 366 : 365;
+        int nbSamediDimanche = 104;
+
+        // on regarde le  la jour de l'année pour ajouté un jour de week .
+        switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
+            case THURSDAY:
+                if (dateReference.isLeapYear()) nbSamediDimanche = nbSamediDimanche + 1;
+                break;
+
+            case FRIDAY:
+                // si on commence le vendredi et année bisextile.
+                if (dateReference.isLeapYear()) nbSamediDimanche = nbSamediDimanche + 2;
+                else nbSamediDimanche = nbSamediDimanche + 1;
+                break;
+
+            case SATURDAY:
+                nbSamediDimanche = nbSamediDimanche + 1;
+                break;
         }
-        int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
-                localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
-        return (int) Math.ceil((i1 - Entreprise.NB_JOURS_MAX_FORFAIT - var - Entreprise.NB_CONGES_BASE - monInt) * tempsPartiel);
+        // Calcul nombre de jour férié ne tombant pas le week end :
+        int nbJourFeriesSemaine = (int) Entreprise.joursFeries(dateReference).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
+
+
+        return (int) Math.ceil((nbJourAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - nbSamediDimanche - Entreprise.NB_CONGES_BASE - nbJourFeriesSemaine) * tempsPartiel);
     }
 
     /**
      * Calcul de la prime annuelle selon la règle :
      * Pour les managers : Prime annuelle de base bonnifiée par l'indice prime manager
+     *
      * Pour les autres employés, la prime de base plus éventuellement la prime de performance calculée si l'employé
      * n'a pas la performance de base, en multipliant la prime de base par un l'indice de performance
      * (égal à la performance à laquelle on ajoute l'indice de prime de base)
@@ -97,6 +117,7 @@ case SATURDAY:var = var + 1;
      */
     //Matricule, performance, date d'embauche, temps partiel, prime
     public Double getPrimeAnnuelle(){
+
         //Calcule de la prime d'ancienneté
         Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete();
         Double prime;
@@ -237,15 +258,6 @@ case SATURDAY:var = var + 1;
 
     @Override
     public String toString() {
-        return "Employe{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", matricule='" + matricule + '\'' +
-                ", dateEmbauche=" + dateEmbauche +
-                ", salaire=" + salaire +
-                ", performance=" + performance +
-                ", tempsPartiel=" + tempsPartiel +
-                '}';
+        return "Employe{" + "id=" + id + ", nom='" + nom + '\'' + ", prenom='" + prenom + '\'' + ", matricule='" + matricule + '\'' + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", performance=" + performance + ", tempsPartiel=" + tempsPartiel + '}';
     }
 }
