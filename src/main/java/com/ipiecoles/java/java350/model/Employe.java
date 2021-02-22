@@ -30,6 +30,11 @@ public class Employe {
 
     private Double tempsPartiel = 1.0;
 
+    static String EXCEPTION_NULL_SALARY = "Salaire null";
+    static String EXCEPTION_NEGATIVE_SALARY = "Salaire négatif";
+    static String EXCEPTION_NEGATIVE_PERCENTAGE = "Pourcentage négatif";
+    static String EXCEPTION_NULL_PERCENTAGE = "Pourcentage null";
+
     public Employe() {
     }
 
@@ -139,8 +144,30 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
+    /** TODO JAVA DOCS
+     *
+     * @param pourcentage
+     */
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    public void augmenterSalaire(Double pourcentage) throws IllegalArgumentException {
+        if(this.salaire == null) {
+            throw new IllegalArgumentException(EXCEPTION_NULL_SALARY);
+        }
+
+        if(this.salaire < 0) {
+            throw new IllegalArgumentException(EXCEPTION_NEGATIVE_SALARY);
+        }
+
+        if(pourcentage != null) {
+            if(pourcentage > 0) {
+                this.salaire = this.salaire + this.salaire * (pourcentage / 100D);
+            } else if(pourcentage < 0) {
+                throw new IllegalArgumentException(EXCEPTION_NEGATIVE_PERCENTAGE);
+            }
+        } else {
+            throw new IllegalArgumentException(EXCEPTION_NULL_PERCENTAGE);
+        }
+    }
 
     public Long getId() {
         return id;
