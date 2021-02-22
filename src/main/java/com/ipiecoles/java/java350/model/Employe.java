@@ -30,10 +30,10 @@ public class Employe {
 
     private Double tempsPartiel = 1.0;
 
-    static String EXCEPTION_NULL_SALARY = "ExcptionSalaireNull";
-    static String EXCEPTION_NEGATIVE_SALARY = "ExcptionSalaireNégatif";
-    static String EXCEPTION_NEGATIVE_PERCENTAGE = "ExcptionPourcentageNégatif";
-    static String EXCEPTION_NULL_PERCENTAGE = "ExcptionPourcentageNull";
+    public static final String EXCEPTION_NULL_SALARY = "Le pourcentage ne peut pas être null";
+    public static final String EXCEPTION_NEGATIVE_SALARY = "Le salaire ne peut pas être négatif";
+    public static final String EXCEPTION_NEGATIVE_PERCENTAGE = "Le pourcentage ne peut pas être négatif";
+    public static final String EXCEPTION_NULL_PERCENTAGE = "Le pourcentage ne peut pas être null";
 
     /**
      * Constructor by default
@@ -126,7 +126,13 @@ public class Employe {
         int nbJourFeriesSemaine = (int) Entreprise.joursFeries(dateReference).stream().filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
 
 
-        return (int) Math.ceil((nbJourAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - nbSamediDimanche - Entreprise.NB_CONGES_BASE - nbJourFeriesSemaine) * tempsPartiel);
+        return (int) Math.ceil((
+                nbJourAnnee -
+                Entreprise.NB_JOURS_MAX_FORFAIT -
+                nbSamediDimanche -
+                Entreprise.NB_CONGES_BASE -
+                nbJourFeriesSemaine
+        ) * tempsPartiel);
     }
 
 
