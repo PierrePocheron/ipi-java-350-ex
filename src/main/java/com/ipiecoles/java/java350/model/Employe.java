@@ -35,9 +35,22 @@ public class Employe {
     static String EXCEPTION_NEGATIVE_PERCENTAGE = "ExcptionPourcentageNégatif";
     static String EXCEPTION_NULL_PERCENTAGE = "ExcptionPourcentageNull";
 
+    /**
+     * Constructor by default
+     */
     public Employe() {
     }
 
+    /**
+     * Constructor : employe
+     * @param nom
+     * @param prenom
+     * @param matricule
+     * @param dateEmbauche
+     * @param salaire
+     * @param performance
+     * @param tempsPartiel
+     */
     public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer performance, Double tempsPartiel) {
         this.nom = nom;
         this.prenom = prenom;
@@ -87,17 +100,16 @@ public class Employe {
         // on regarde le  la jour de l'année pour ajouté un jour de week .
         switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
-                if (dateReference.isLeapYear()){
+                if (dateReference.isLeapYear()) {
                     nbSamediDimanche = nbSamediDimanche + 1;
                 }
                 break;
 
             case FRIDAY:
                 // si on commence le vendredi et année bisextile.
-                if (dateReference.isLeapYear()){
+                if (dateReference.isLeapYear()) {
                     nbSamediDimanche = nbSamediDimanche + 2;
-                }
-                else{
+                } else {
                     nbSamediDimanche = nbSamediDimanche + 1;
                 }
                 break;
@@ -116,6 +128,8 @@ public class Employe {
 
         return (int) Math.ceil((nbJourAnnee - Entreprise.NB_JOURS_MAX_FORFAIT - nbSamediDimanche - Entreprise.NB_CONGES_BASE - nbJourFeriesSemaine) * tempsPartiel);
     }
+
+
 
     /**
      * Calcul de la prime annuelle selon la règle :
@@ -154,9 +168,11 @@ public class Employe {
         return prime * this.tempsPartiel;
     }
 
-    /** TODO JAVA DOCS
-     *
+    /**
+     * Méthode permetrant d'augmenter le salaire d'un employé en fonction du pourcentage passé en parametre
      * @param pourcentage
+     * Si une des conditions suivantes n'est pas bonne, la méthode throws une exception
+     * @throws IllegalArgumentException
      */
     //Augmenter salaire
     public void augmenterSalaire(Double pourcentage) throws IllegalArgumentException {
@@ -179,10 +195,18 @@ public class Employe {
         }
     }
 
+    /**
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
