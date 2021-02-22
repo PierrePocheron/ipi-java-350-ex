@@ -33,31 +33,35 @@ class EmployeServiceTest {
     private EmployeRepository employeRepository;
 
     @Test
-    public void testEmbauchePremierEmploye() throws EmployeException {
+    void testEmbauchePremierEmploye() throws EmployeException {
         //Given Pas d'employés en base
         String nom = "Doe";
         String prenom = "John";
         Poste poste = Poste.TECHNICIEN;
         NiveauEtude niveauEtude = NiveauEtude.BTS_IUT;
-        Double tempsPartiel = 1.0d;
-        //Simuler qu'aucun employé n'est présent (ou du moins aucun matricule)
-        Mockito.when(employeRepository.findLastMatricule()).thenReturn(null);
-        //Simuler que la recherche par matricule ne renvoie pas de résultats
-//      Mockito.when(employeRepository.findByMatricule(Mockito.anyString())).thenReturn(null);
-        Mockito.when(employeRepository.findByMatricule("T00001")).thenReturn(null);
+        Double tempsPartiel = 1.0;
+        //Simuler qu'ail y ya 99999 employe en bas (ou du moins que lea matruclue le plus haut)
+        Mockito.when(employeRepository.findLastMatricule()).thenReturn("99999");
 
+
+
+        try {
+            employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
+            Assertions.fail("embaucheEmploye aurait du lancer exeption");
+        } catch (EmployeException e) {
+            Assertions.assertThat(e.getMessage()).isEqualTo("Limite des 100000 matricules atteinte !");
+        }
         //When
-        Employe employe = employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
 
         //Then
-        //Employe employe = employeRepository.findByMatricule("T00001");
-        Assertions.assertThat(employe).isNotNull();
-        Assertions.assertThat(employe.getNom()).isEqualTo(nom);
-        Assertions.assertThat(employe.getPrenom()).isEqualTo(prenom);
-        Assertions.assertThat(employe.getSalaire()).isEqualTo(1825.46);
-        Assertions.assertThat(employe.getTempsPartiel()).isEqualTo(1.0);
-        Assertions.assertThat(employe.getDateEmbauche()).isEqualTo(LocalDate.now());
-        Assertions.assertThat(employe.getMatricule()).isEqualTo("T00001");
+//        Employe employe = employeRepository.findByMatricule("T00001");
+        //   Assertions.assertThat(employe).isNotNull();
+        // Assertions.assertThat(employe.getNom()).isEqualTo(nom);
+        //Assertions.assertThat(employe.getPrenom()).isEqualTo(prenom);
+        //Assertions.assertThat(employe.getSalaire()).isEqualTo(1825.46);
+        //Assertions.assertThat(employe.getTempsPartiel()).isEqualTo(1.0);
+        //Assertions.assertThat(employe.getDateEmbauche()).isEqualTo(LocalDate.now());
+        //Assertions.assertThat(employe.getMatricule()).isEqualTo("T00001");
     }
 
 
@@ -99,7 +103,7 @@ class EmployeServiceTest {
         //Simuler que la recherche par matricule renvoie un employe
 //      Mockito.when(employeRepository.findByMatricule(Mockito.anyString())).thenReturn(null);
         Mockito.when(employeRepository.findByMatricule("T00001")).thenReturn(employeExistant);
-        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+
         //When
         try{
             employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
@@ -110,7 +114,7 @@ class EmployeServiceTest {
     }
 
 //    @Test
-//    public void testEmbauchePremierEmploye() throws EmployeException {
+//    public void testEmbauchePremierEmploye2() throws EmployeException {
 //        //Given Pas d'employés en base
 //        String nom = "Doe";
 //        String prenom = "John";
@@ -125,7 +129,8 @@ class EmployeServiceTest {
 //        employeService.embaucheEmploye(nom, prenom, poste, niveauEtude, tempsPartiel);
 //        //Then
 //        ArgumentCaptor<Employe> employeArgumentCaptor = ArgumentCaptor.forClass(Employe.class);
-////        Mockito.verify(employeRepository, Mockito.times(1)).save(employeArgumentCaptor.capture());
+//        Mockito.when(employeRepository.save(Mockito.any(Employe.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+//
 //        Mockito.verify(employeRepository).save(employeArgumentCaptor.capture());
 //        Employe employe = employeArgumentCaptor.getValue();
 //        Assertions.assertThat(employe).isNotNull();
