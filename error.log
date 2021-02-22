@@ -8,3 +8,7 @@
 10-02-2021 11:52:27.485 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - L'employé de matriculeT00001 existe déjà en BDD
 10-02-2021 11:52:27.529 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun matricule trouvé, matricule intitial affecté
 10-02-2021 11:52:27.538 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - Limite des 100000 matricules atteinte !
+22-02-2021 09:54:14.711 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun matricule trouvé, matricule initial affecté
+22-02-2021 09:54:14.714 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - L'employé de matricule T00001 existe déjà en BDD
+22-02-2021 09:54:14.766 WARN  c.i.j.java350.service.EmployeService.embaucheEmploye - Aucun matricule trouvé, matricule initial affecté
+22-02-2021 09:54:14.807 ERROR c.i.j.java350.service.EmployeService.embaucheEmploye - Limite des 100000 matricules atteinte !
