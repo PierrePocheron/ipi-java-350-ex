@@ -87,17 +87,27 @@ public class Employe {
         // on regarde le  la jour de l'année pour ajouté un jour de week .
         switch (LocalDate.of(dateReference.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
-                if (dateReference.isLeapYear()) nbSamediDimanche = nbSamediDimanche + 1;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
                 break;
 
             case FRIDAY:
                 // si on commence le vendredi et année bisextile.
-                if (dateReference.isLeapYear()) nbSamediDimanche = nbSamediDimanche + 2;
-                else nbSamediDimanche = nbSamediDimanche + 1;
+                if (dateReference.isLeapYear()){
+                    nbSamediDimanche = nbSamediDimanche + 2;
+                }
+                else{
+                    nbSamediDimanche = nbSamediDimanche + 1;
+                }
                 break;
 
             case SATURDAY:
                 nbSamediDimanche = nbSamediDimanche + 1;
+                break;
+
+            // OTHER CASE
+            default:
                 break;
         }
         // Calcul nombre de jour férié ne tombant pas le week end :
