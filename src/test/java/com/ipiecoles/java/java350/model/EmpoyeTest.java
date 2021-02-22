@@ -15,7 +15,7 @@ public class EmpoyeTest {
 
     // Correction
     @Test
-    public void testCheckNbAnneeAncienneteInfNow() {
+    void testCheckNbAnneeAncienneteInfNow() {
         // Given
         Employe employe = new Employe("Popo", "pupu", "0", LocalDate.now().minusYears(15), 1000d, 10, 1d);
 
@@ -28,7 +28,7 @@ public class EmpoyeTest {
 
     // Correction
     @Test
-    public void testCheckNbAnneeAncienneteNow() {
+    void testCheckNbAnneeAncienneteNow() {
         // Given
         Employe employe = new Employe("Popo", "pupu", "0", LocalDate.now(), 1000d, 10, 1d);
 
@@ -41,7 +41,7 @@ public class EmpoyeTest {
 
     // Correction
     @Test
-    public void testCheckNbAnneeAncienneteDateEmbaucheNull() {
+    void testCheckNbAnneeAncienneteDateEmbaucheNull() {
         // Given
         Employe employe = new Employe();
         employe.setDateEmbauche(null);
@@ -54,7 +54,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testCheckNbAnneeAncienneteIsPositive() {
+    void testCheckNbAnneeAncienneteIsPositive() {
         // Given
         Employe employe = new Employe("Popo", "pupu", "0", LocalDate.now().minusYears(15), 1000d, 10, 1d);
 
@@ -66,7 +66,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testCheckNbAnneeAncienneteGreaterThan5() {
+    void testCheckNbAnneeAncienneteGreaterThan5() {
         // Given
         Employe employe = new Employe("Popo", "pupu", "0", LocalDate.now().minusYears(15), 1000d, 10, 1d);
 
@@ -78,7 +78,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testCheckNbAnneeAncienneteIsLessThan50() {
+    void testCheckNbAnneeAncienneteIsLessThan50() {
         // Given
         Employe employe = new Employe("Popo", "pupu", "0", LocalDate.now().minusYears(15), 1000d, 10, 1d);
 
@@ -91,7 +91,7 @@ public class EmpoyeTest {
 
     // Correction
     @Test
-    public void testCheckPrimeAnnuelleDefaut(){
+    void testCheckPrimeAnnuelleDefaut(){
         // Given
         Integer performance = 1;
         String matricule = "T12345";
@@ -116,7 +116,7 @@ public class EmpoyeTest {
             "1, 'T12345', 2.0, 5, 3000",
             "4, 'M12345', 3.0, 7, 7200",
     })
-    public void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
+    void testCheckPrimeAnnuelleAll(Integer performance, String matricule, Double tauxActivite, Long nbAnneeAnciennete, Double result) {
         //Given
         Employe employe = new Employe("Popo", "pupu", matricule, LocalDate.now().minusYears(nbAnneeAnciennete), 1000d, performance, tauxActivite);
         // When
@@ -127,7 +127,7 @@ public class EmpoyeTest {
 
     // Correction
     @Test
-    public void testCheckPrimeAnnuellematriculeNull(){
+    void testCheckPrimeAnnuellematriculeNull(){
         // Given
         Integer performance = 1;
         Double tauxActivite = 1.0;
@@ -144,7 +144,7 @@ public class EmpoyeTest {
 
     // Methode augmenterSalaire
     @Test
-    public void testAugmenterSalaireNormal(){
+    void testAugmenterSalaireNormal(){
         // Given
         Double pourcentage = 10d;
         Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
@@ -157,7 +157,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testAugmenterSalairePourcentageNull(){
+    void testAugmenterSalairePourcentageNull(){
         // Given
         Double pourcentage = null;
         Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
@@ -172,7 +172,7 @@ public class EmpoyeTest {
 
 
     @Test
-    public void testAugmenterSalairePourcentage0(){
+    void testAugmenterSalairePourcentage0(){
         // Given
         Double pourcentage = 0d;
         Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
@@ -186,7 +186,7 @@ public class EmpoyeTest {
 
 
     @Test
-    public void testAugmenterSalairePourcentageNegatif(){
+    void testAugmenterSalairePourcentageNegatif(){
         // Given
         Double pourcentage = -1d;
         Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
@@ -199,7 +199,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testAugmenterSalaireNegatif(){
+    void testAugmenterSalaireNegatif(){
         // Given
         Double pourcentage = 1d;
         Double salaire = -1000d;
@@ -214,7 +214,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testAugmenterSalaireNull(){
+    void testAugmenterSalaireNull(){
         // Given
         Double pourcentage = 1d;
         Double salaire = null;
@@ -229,7 +229,7 @@ public class EmpoyeTest {
     }
 
     @Test
-    public void testAugmenterSalaire0(){
+    void testAugmenterSalaire0(){
         // Given
         Double pourcentage = 1d;
         Double salaire = 0d;
