@@ -157,48 +157,6 @@ public class EmpoyeTest {
     }
 
     @Test
-    void testAugmenterSalairePourcentageNull(){
-        // Given
-        Double pourcentage = null;
-        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
-
-        // When
-        assertThatThrownBy(() -> employe.augmenterSalaire(pourcentage))
-                // Then
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(employe.EXCEPTION_NULL_PERCENTAGE);
-    }
-
-
-
-    @Test
-    void testAugmenterSalairePourcentage0(){
-        // Given
-        Double pourcentage = 0d;
-        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
-
-        // When
-        employe.augmenterSalaire(pourcentage);
-
-        // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(employe.getSalaire()).isEqualTo(1000);
-    }
-
-
-    @Test
-    void testAugmenterSalairePourcentageNegatif(){
-        // Given
-        Double pourcentage = -1d;
-        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
-
-        // When
-        assertThatThrownBy(() -> employe.augmenterSalaire(pourcentage))
-                // Then
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(employe.EXCEPTION_NEGATIVE_PERCENTAGE);
-    }
-
-    @Test
     void testAugmenterSalaireNegatif(){
         // Given
         Double pourcentage = 1d;
@@ -241,5 +199,48 @@ public class EmpoyeTest {
 
         // Then (org.assertj.core.api.Assertions)
         Assertions.assertThat(employe.getSalaire()).isEqualTo(0);
+    }
+
+
+    @Test
+    void testAugmenterSalairePourcentageNull(){
+        // Given
+        Double pourcentage = null;
+        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
+
+        // When
+        assertThatThrownBy(() -> employe.augmenterSalaire(pourcentage))
+                // Then
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(employe.EXCEPTION_NULL_PERCENTAGE);
+    }
+
+
+
+    @Test
+    void testAugmenterSalairePourcentage0(){
+        // Given
+        Double pourcentage = 0d;
+        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
+
+        // When
+        employe.augmenterSalaire(pourcentage);
+
+        // Then (org.assertj.core.api.Assertions)
+        Assertions.assertThat(employe.getSalaire()).isEqualTo(1000);
+    }
+
+
+    @Test
+    void testAugmenterSalairePourcentageNegatif(){
+        // Given
+        Double pourcentage = -1d;
+        Employe employe = new Employe("Popo", "pupu", "T12345", LocalDate.now().minusYears(0L), 1000d, 1, 1.0);
+
+        // When
+        assertThatThrownBy(() -> employe.augmenterSalaire(pourcentage))
+                // Then
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(employe.EXCEPTION_NEGATIVE_PERCENTAGE);
     }
 }
