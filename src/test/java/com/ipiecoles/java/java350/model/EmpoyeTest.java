@@ -108,7 +108,7 @@ public class EmpoyeTest {
         Assertions.assertThat(primeAnnuelle).isEqualTo(1000);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "performance, matricule, tauxActivite, nbAnneeAnciennete, result")
     @CsvSource({
             "1, 'T12345', 1.0, 0, 1000",
             "1, 'M12345', 1.0, 0, 1700",
@@ -252,7 +252,8 @@ public class EmpoyeTest {
             "2019, 12, 12, 8",
             "2021, 12, 1, 10",
             "2022, 5, 12, 10",
-            "2032, 4, 4, 11"
+            "2032, 4, 4, 11",
+            "2032, 4, 2, 11"
     })
     void testgetNbRttParametre(Integer year, Integer mounth, Integer day, Integer result) {
         //Given
