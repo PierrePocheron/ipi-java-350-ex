@@ -9,11 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-//@RunWith(SpringRunner.class) //Junit 4
-//@ExtendWith(SpringExtension.class) //Junit 5
-//@DataJpaTest
 @SpringBootTest
 class EmployeRepositoryTest {
 
@@ -21,7 +17,7 @@ class EmployeRepositoryTest {
     EmployeRepository employeRepository;
 
     @Test
-    public void testFindLastMatricule0Employe()
+    void testFindLastMatricule0Employe()
     {
         //Given
         //employeRepository.deleteAll();
@@ -34,7 +30,7 @@ class EmployeRepositoryTest {
     }
 
     @Test
-    public void testFindLastMatricule1Employe()
+    void testFindLastMatricule1Employe()
     {
         //Given
         //Insérer des données en base
@@ -47,7 +43,7 @@ class EmployeRepositoryTest {
     }
 
     @Test
-    public void testFindLastMatriculeNEmploye()
+    void testFindLastMatriculeNEmploye()
     {
         //Given
         //Insérer des données en base
@@ -62,9 +58,30 @@ class EmployeRepositoryTest {
         Assertions.assertThat(lastMatricule).isEqualTo("40325");
     }
 
+
+    @Test
+    void testFindAvgPerformanceEmployeWhereMatricule()
+    {
+        //Given
+        //Insérer des données en base
+        employeRepository.save(new Employe("Doe", "John", "C12345", LocalDate.now(), 1500d, 10, 1.0));
+        employeRepository.save(new Employe("Doe", "Jane", "C40325", LocalDate.now(), 1500d, 6, 1.0));
+        employeRepository.save(new Employe("Doe", "Jim", "C06432", LocalDate.now(), 1500d, 2, 1.0));
+        employeRepository.save(new Employe("Doe", "carter", "M06432", LocalDate.now(), 1500d, 12, 1.0));
+        employeRepository.save(new Employe("Carglass", "Jim", "T06432", LocalDate.now(), 1500d, 12, 1.0));
+
+        //When
+        Double avgPreformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("C");
+
+        //Then
+        Assertions.assertThat(avgPreformance).isEqualTo(6);
+    }
+
+
+
     @BeforeEach
     @AfterEach
-    public void purgeBdd(){
+    void purgeBdd(){
         employeRepository.deleteAll();
     }
 
