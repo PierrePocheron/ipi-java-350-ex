@@ -199,7 +199,7 @@ public class EmpoyeTest {
         employe.augmenterSalaire(pourcentage);
 
         // Then (org.assertj.core.api.Assertions)
-        Assertions.assertThat(employe.getSalaire()).isEqualTo(0);
+        Assertions.assertThat(employe.getSalaire()).isZero();
     }
 
 
