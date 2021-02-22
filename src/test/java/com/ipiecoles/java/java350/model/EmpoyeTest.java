@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -242,5 +243,26 @@ public class EmpoyeTest {
                 // Then
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(employe.EXCEPTION_NEGATIVE_PERCENTAGE);
+    }
+
+
+    // Methode getNbRtt
+    @ParameterizedTest(name = "{Year}/{Mounth}/{Day}  Nombre de RTT attendu : {result}")
+    @CsvSource({
+            "2019, 12, 12, 8",
+            "2021, 12, 1, 10",
+            "2022, 5, 12, 10",
+            "2032, 4, 4, 11"
+    })
+    void testgetNbRttParametre(Integer year, Integer mounth, Integer day, Integer result) {
+        //Given
+        LocalDate dateReference = LocalDate.of(year,mounth,day);
+        Employe employe = new Employe();
+
+        // When
+        Integer nbJourRtt = employe.getNbRtt(dateReference);
+
+        // Then
+        assertThat(nbJourRtt).isEqualTo(result);
     }
 }
