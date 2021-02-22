@@ -36,7 +36,7 @@ public class EmployeService {
      * @throws EntityExistsException Si le matricule correspond à un employé existant
      * @return
      */
-    public Employe embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
+    public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
         logger.info("Embauche d'un employé avec les infos suivantes : nom : {}, prénom : {}, poste {}, niveau d'étude : {}, taux activité : {}",
                 nom, prenom, poste, niveauEtude, tempsPartiel);
         //Récupération du type d'employé à partir du poste
@@ -70,10 +70,11 @@ public class EmployeService {
 
         //Création et sauvegarde en BDD de l'employé.
         Employe employe = new Employe(nom, prenom, matricule, LocalDate.now(), salaire, Entreprise.PERFORMANCE_BASE, tempsPartiel);
-        employe = employeRepository.save(employe);
-        logger.info("Employé créé : {}", employe.toString());
-
-        return employe;
+        employeRepository.save(employe);
+        logger.info("Employé créé : {0}", employe.toString());
+//        if(employe.getId() != null) {
+//            logger.info("Employé créé : {}", employe.toString());
+//        }
     }
 
 
